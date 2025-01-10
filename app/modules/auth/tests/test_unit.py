@@ -75,6 +75,23 @@ def test_signup_user_successful(test_client):
     assert response.request.path == url_for("public.index"), "Signup was unsuccessful"
 
 
+def test_conteo_usuarios(test_client):
+    num_antes = UserRepository().count()
+    data = {
+        "name": "Test",
+        "surname": "Foo",
+        "email": "service_test@example.com",
+        "password": "test1234"
+    }
+
+    AuthenticationService().create_with_profile(**data)
+
+    num_ahora = UserRepository().count()
+    tiene_dar = num_antes+1
+    assert num_ahora == tiene_dar
+
+
+
 def test_service_create_with_profie_success(clean_database):
     data = {
         "name": "Test",
